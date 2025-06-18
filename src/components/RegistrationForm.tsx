@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -69,6 +70,8 @@ const RegistrationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Form submission started with data:', formData);
+    
     // Basic validation
     if (!formData.responsibleName || formData.phone === '+55 ' || !formData.cpf || 
         !formData.studentName || !formData.grade || !formData.currentlyStudies) {
@@ -92,13 +95,20 @@ const RegistrationForm = () => {
     setIsSubmitting(true);
 
     try {
+      console.log('Sending request to webhook...');
+      
       const response = await fetch('https://n8n.colegiozampieri.com/webhook/EsperaMatricula', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
+        mode: 'cors',
         body: JSON.stringify(formData),
       });
+
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
 
       if (response.ok) {
         console.log('Form submitted successfully:', formData);
@@ -121,15 +131,27 @@ const RegistrationForm = () => {
           currentSchool: ''
         });
       } else {
-        throw new Error('Erro ao enviar formulário');
+        const errorText = await response.text();
+        console.log('Error response:', errorText);
+        throw new Error(`Erro HTTP: ${response.status} - ${errorText}`);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast({
-        title: "Erro ao enviar",
-        description: "Ocorreu um erro ao enviar o formulário. Tente novamente.",
-        variant: "destructive"
-      });
+      
+      // Specific error handling
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        toast({
+          title: "Erro de conexão",
+          description: "Não foi possível conectar ao servidor. Verifique sua conexão com a internet e tente novamente.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Erro ao enviar",
+          description: "Ocorreu um erro ao enviar o formulário. Tente novamente em alguns minutos.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
