@@ -1,5 +1,3 @@
-
-
 import ZampieriLogo from "@/components/ZampieriLogo";
 import RegistrationForm from "@/components/RegistrationForm";
 import { GraduationCap, Star, Users, Instagram } from "lucide-react";
@@ -8,7 +6,7 @@ const Index = () => {
       {/* Header */}
       <header className="bg-white shadow-xl border-b-4 border-green-900">
         <div className="container mx-auto px-4 py-8">
-          <ZampieriLogo className="justify-center md:justify-start text-gray-900" />
+          <ZampieriLogo className="justify-center md:justify-start" textColor="text-gray-900" />
         </div>
       </header>
 
@@ -97,7 +95,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="text-white py-16 bg-gradient-to-r from-green-600 to-green-700">
         <div className="container mx-auto px-4 text-center">
-          <ZampieriLogo className="justify-center mb-8 text-white" />
+          <ZampieriLogo className="justify-center mb-8" textColor="text-white" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div>
               <h4 className="font-bold mb-4 text-lg">Contato</h4>
@@ -126,4 +124,3 @@ const Index = () => {
     </div>;
 };
 export default Index;
-
