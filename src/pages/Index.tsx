@@ -1,12 +1,13 @@
+
 import ZampieriLogo from "@/components/ZampieriLogo";
 import RegistrationForm from "@/components/RegistrationForm";
 import { GraduationCap, Star, Users, Instagram } from "lucide-react";
 const Index = () => {
   return <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-green-100">
       {/* Header */}
-      <header className="bg-gradient-to-r from-green-600 to-green-700 shadow-xl border-b-4 border-green-900">
+      <header className="bg-white shadow-xl border-b-4 border-green-900">
         <div className="container mx-auto px-4 py-8">
-          <ZampieriLogo className="justify-center md:justify-start text-white" />
+          <ZampieriLogo className="justify-center md:justify-start text-gray-900" />
         </div>
       </header>
 
