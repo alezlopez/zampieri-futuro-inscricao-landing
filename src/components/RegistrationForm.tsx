@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +19,7 @@ const RegistrationForm = () => {
     currentSchool: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const formatPhone = (value: string) => {
@@ -66,7 +66,7 @@ const RegistrationForm = () => {
     setFormData(prev => ({ ...prev, [field]: formattedValue }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -89,25 +89,50 @@ const RegistrationForm = () => {
       return;
     }
 
-    console.log('Form submitted:', formData);
-    
-    toast({
-      title: "Cadastro realizado com sucesso!",
-      description: "Você receberá informações sobre vagas e valores promocionais em primeira mão.",
-      variant: "default"
-    });
+    setIsSubmitting(true);
 
-    // Reset form
-    setFormData({
-      responsibleName: '',
-      phone: '+55 ',
-      cpf: '',
-      studentName: '',
-      grade: '',
-      currentlyStudies: '',
-      previouslyStudied: '',
-      currentSchool: ''
-    });
+    try {
+      const response = await fetch('https://n8n.colegiozampieri.com/webhook/EsperaMatricula', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully:', formData);
+        
+        toast({
+          title: "Cadastro realizado com sucesso!",
+          description: "Você receberá informações sobre vagas e valores promocionais em primeira mão.",
+          variant: "default"
+        });
+
+        // Reset form
+        setFormData({
+          responsibleName: '',
+          phone: '+55 ',
+          cpf: '',
+          studentName: '',
+          grade: '',
+          currentlyStudies: '',
+          previouslyStudied: '',
+          currentSchool: ''
+        });
+      } else {
+        throw new Error('Erro ao enviar formulário');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Erro ao enviar",
+        description: "Ocorreu um erro ao enviar o formulário. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const grades = [
@@ -258,9 +283,10 @@ const RegistrationForm = () => {
 
           <Button 
             type="submit" 
-            className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 text-white font-semibold py-3 text-lg transition-all duration-300 transform hover:scale-105"
+            disabled={isSubmitting}
+            className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 text-white font-semibold py-3 text-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
-            Entrar na Lista de Espera
+            {isSubmitting ? 'Enviando...' : 'Entrar na Lista de Espera'}
           </Button>
         </form>
 
