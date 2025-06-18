@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     responsibleName: '',
-    phone: '',
+    phone: '+55 ',
     cpf: '',
     studentName: '',
     grade: '',
@@ -23,9 +23,29 @@ const RegistrationForm = () => {
   const { toast } = useToast();
 
   const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, '');
-    const formatted = numbers.replace(/^(\d{2})(\d{2})(\d{5})(\d{4})$/, '+$1 $2 $3-$4');
-    return formatted.length <= 17 ? formatted : value;
+    // Remove todos os caracteres não numéricos, exceto o +
+    const numbers = value.replace(/[^\d+]/g, '');
+    
+    // Se não começar com +55, adiciona
+    if (!numbers.startsWith('+55')) {
+      const onlyNumbers = numbers.replace(/\D/g, '');
+      if (onlyNumbers.length === 0) {
+        return '+55 ';
+      }
+      return `+55 ${onlyNumbers}`;
+    }
+    
+    // Remove o +55 para formatar apenas os números restantes
+    const phoneNumbers = numbers.substring(3);
+    
+    // Formata: +55 XX XXXXX-XXXX
+    if (phoneNumbers.length <= 2) {
+      return `+55 ${phoneNumbers}`;
+    } else if (phoneNumbers.length <= 7) {
+      return `+55 ${phoneNumbers.substring(0, 2)} ${phoneNumbers.substring(2)}`;
+    } else {
+      return `+55 ${phoneNumbers.substring(0, 2)} ${phoneNumbers.substring(2, 7)}-${phoneNumbers.substring(7, 11)}`;
+    }
   };
 
   const formatCPF = (value: string) => {
@@ -50,7 +70,7 @@ const RegistrationForm = () => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.responsibleName || !formData.phone || !formData.cpf || 
+    if (!formData.responsibleName || formData.phone === '+55 ' || !formData.cpf || 
         !formData.studentName || !formData.grade || !formData.currentlyStudies) {
       toast({
         title: "Campos obrigatórios",
@@ -80,7 +100,7 @@ const RegistrationForm = () => {
     // Reset form
     setFormData({
       responsibleName: '',
-      phone: '',
+      phone: '+55 ',
       cpf: '',
       studentName: '',
       grade: '',
