@@ -1,8 +1,11 @@
+
 import ZampieriLogo from "@/components/ZampieriLogo";
 import RegistrationForm from "@/components/RegistrationForm";
 import { GraduationCap, Star, Users, Instagram } from "lucide-react";
+
 const Index = () => {
-  return <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-green-100">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-green-100">
       {/* Header */}
       <header className="bg-white shadow-xl border-b-4 border-green-900">
         <div className="container mx-auto px-4 py-8">
@@ -93,34 +96,35 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="text-white py-16 bg-gradient-to-r from-green-600 to-green-700">
+      <footer className="text-white py-8 bg-gradient-to-r from-green-600 to-green-700">
         <div className="container mx-auto px-4 text-center">
-          <ZampieriLogo className="justify-center mb-8" textColor="text-white" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <ZampieriLogo className="justify-center mb-6" textColor="text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div>
-              <h4 className="font-bold mb-4 text-lg">Contato</h4>
+              <h4 className="font-bold mb-3 text-lg">Contato</h4>
               <p className="text-green-200">📞 (11) 5560-1473</p>
               <p className="text-green-200">secretaria@colegiozampieri.com.br</p>
             </div>
             <div>
-              <h4 className="font-bold mb-4 text-lg">Endereço</h4>
-              <p className="text-green-200">Rua das Flores, 123</p>
-              <p className="text-green-200">São Paulo - SP</p>
+              <h4 className="font-bold mb-3 text-lg">Endereço</h4>
+              <p className="text-green-200">Rua dos Acarapévas, 80</p>
+              <p className="text-green-200">Bal. São Francisco - SP</p>
             </div>
             <div>
-              <h4 className="font-bold mb-4 text-lg">Instagram</h4>
+              <h4 className="font-bold mb-3 text-lg">Instagram</h4>
               <div className="flex items-center justify-center gap-3">
                 <Instagram className="h-6 w-6 text-green-200 hover:text-white transition-colors cursor-pointer" />
                 <span className="text-green-200">@colegio_zampieri</span>
               </div>
-              
             </div>
           </div>
-          <div className="border-t border-green-700 pt-8">
+          <div className="border-t border-green-700 pt-6">
             <p className="text-green-200">© 2025 Colégio Zampieri. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
