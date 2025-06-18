@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +10,7 @@ import FormHeader from './form/FormHeader';
 import ResponsibleFields from './form/ResponsibleFields';
 import StudentFields from './form/StudentFields';
 import ZampieriStudyFields from './form/ZampieriStudyFields';
+import ConsentCheckboxes from './form/ConsentCheckboxes';
 import FormFooter from './form/FormFooter';
 
 const RegistrationForm = () => {
@@ -54,6 +56,7 @@ const RegistrationForm = () => {
           <ResponsibleFields formData={formData} onInputChange={handleInputChange} />
           <StudentFields formData={formData} onInputChange={handleInputChange} />
           <ZampieriStudyFields formData={formData} onInputChange={handleInputChange} />
+          <ConsentCheckboxes formData={formData} onInputChange={handleInputChange} />
 
           <Button 
             type="submit" 

@@ -10,6 +10,8 @@ export interface RegistrationFormData {
   currentlyStudies: string;
   previouslyStudied: string;
   currentSchool: string;
+  privacyConsent: string;
+  contactConsent: string;
 }
 
 export const validateForm = (formData: RegistrationFormData) => {
@@ -34,6 +36,26 @@ export const validateForm = (formData: RegistrationFormData) => {
     };
   }
 
+  if (formData.privacyConsent !== 'true') {
+    return {
+      isValid: false,
+      error: {
+        title: "Consentimento obrigatório",
+        description: "É necessário concordar com a política de privacidade para prosseguir."
+      }
+    };
+  }
+
+  if (formData.contactConsent !== 'true') {
+    return {
+      isValid: false,
+      error: {
+        title: "Autorização obrigatória",
+        description: "É necessário autorizar o contato da escola para prosseguir."
+      }
+    };
+  }
+
   return { isValid: true };
 };
 
@@ -47,7 +69,9 @@ export const getInitialFormData = (): RegistrationFormData => ({
   timePreference: '',
   currentlyStudies: '',
   previouslyStudied: '',
-  currentSchool: ''
+  currentSchool: '',
+  privacyConsent: 'false',
+  contactConsent: 'false'
 });
 
 export const grades = [
