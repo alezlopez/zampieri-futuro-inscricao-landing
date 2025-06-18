@@ -1,4 +1,5 @@
 
+
 import ZampieriLogo from "@/components/ZampieriLogo";
 import RegistrationForm from "@/components/RegistrationForm";
 import { GraduationCap, Star, Users, Instagram } from "lucide-react";
@@ -100,7 +101,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div>
               <h4 className="font-bold mb-4 text-lg">Contato</h4>
-              <p className="text-green-200">📞 (11) 99999-9999</p>
+              <p className="text-green-200">📞 (11) 5560-1473</p>
               <p className="text-green-200">secretaria@colegiozampieri.com.br</p>
             </div>
             <div>
@@ -125,3 +126,4 @@ const Index = () => {
     </div>;
 };
 export default Index;
+
