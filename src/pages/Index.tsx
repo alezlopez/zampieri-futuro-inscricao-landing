@@ -1,6 +1,8 @@
+
 import ZampieriLogo from "@/components/ZampieriLogo";
 import RegistrationForm from "@/components/RegistrationForm";
-import { GraduationCap, Star, Users } from "lucide-react";
+import { GraduationCap, Star, Users, Instagram } from "lucide-react";
+
 const Index = () => {
   return <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-green-100">
       {/* Header */}
@@ -109,8 +111,11 @@ const Index = () => {
             </div>
             <div>
               <h4 className="font-bold mb-4 text-lg">Redes Sociais</h4>
-              <p className="text-green-200">@colegiozampieri</p>
-              <p className="text-green-200">Facebook | Instagram</p>
+              <div className="flex items-center justify-center gap-3">
+                <Instagram className="h-6 w-6 text-green-200 hover:text-white transition-colors cursor-pointer" />
+                <span className="text-green-200">@colegiozampieri</span>
+              </div>
+              <p className="text-green-200 mt-2">Facebook | Instagram</p>
             </div>
           </div>
           <div className="border-t border-green-700 pt-8">
@@ -120,4 +125,5 @@ const Index = () => {
       </footer>
     </div>;
 };
+
 export default Index;
