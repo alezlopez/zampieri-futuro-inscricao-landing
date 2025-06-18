@@ -1,5 +1,5 @@
 
-export interface FormData {
+export interface RegistrationFormData {
   responsibleName: string;
   phone: string;
   cpf: string;
@@ -10,7 +10,7 @@ export interface FormData {
   currentSchool: string;
 }
 
-export const validateForm = (formData: FormData) => {
+export const validateForm = (formData: RegistrationFormData) => {
   if (!formData.responsibleName || formData.phone === '+55 ' || !formData.cpf || 
       !formData.studentName || !formData.grade || !formData.currentlyStudies) {
     return {
@@ -35,7 +35,7 @@ export const validateForm = (formData: FormData) => {
   return { isValid: true };
 };
 
-export const getInitialFormData = (): FormData => ({
+export const getInitialFormData = (): RegistrationFormData => ({
   responsibleName: '',
   phone: '+55 ',
   cpf: '',

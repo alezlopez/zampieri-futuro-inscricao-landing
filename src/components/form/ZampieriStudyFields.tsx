@@ -3,10 +3,10 @@ import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { FormData } from '@/utils/formValidation';
+import { RegistrationFormData } from '@/utils/formValidation';
 
 interface ZampieriStudyFieldsProps {
-  formData: FormData;
+  formData: RegistrationFormData;
   onInputChange: (field: string, value: string) => void;
 }
 

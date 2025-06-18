@@ -1,13 +1,12 @@
-
 import { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { FormData, getInitialFormData } from '@/utils/formValidation';
+import { RegistrationFormData, getInitialFormData } from '@/utils/formValidation';
 
 export const useFormSubmission = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const submitForm = async (formData: FormData, setFormData: (data: FormData) => void) => {
+  const submitForm = async (formData: RegistrationFormData, setFormData: (data: RegistrationFormData) => void) => {
     setIsSubmitting(true);
 
     try {

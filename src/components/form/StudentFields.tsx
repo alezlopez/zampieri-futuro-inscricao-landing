@@ -3,10 +3,10 @@ import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormData, grades } from '@/utils/formValidation';
+import { RegistrationFormData, grades } from '@/utils/formValidation';
 
 interface StudentFieldsProps {
-  formData: FormData;
+  formData: RegistrationFormData;
   onInputChange: (field: string, value: string) => void;
 }
 

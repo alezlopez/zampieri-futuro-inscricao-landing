@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatPhone, formatCPF } from '@/utils/formatters';
-import { validateForm, getInitialFormData, FormData } from '@/utils/formValidation';
+import { validateForm, getInitialFormData, RegistrationFormData } from '@/utils/formValidation';
 import { useFormSubmission } from '@/hooks/useFormSubmission';
 import { useToast } from "@/hooks/use-toast";
 import FormHeader from './form/FormHeader';
@@ -13,7 +12,7 @@ import ZampieriStudyFields from './form/ZampieriStudyFields';
 import FormFooter from './form/FormFooter';
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState<FormData>(getInitialFormData());
+  const [formData, setFormData] = useState<RegistrationFormData>(getInitialFormData());
   const { isSubmitting, submitForm } = useFormSubmission();
   const { toast } = useToast();
 
