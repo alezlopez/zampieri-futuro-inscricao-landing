@@ -97,28 +97,104 @@ const RegistrationForm = () => {
     try {
       console.log('Sending request to webhook...');
       
-      // Try different approaches to handle CORS
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      // First attempt: try with CORS enabled
+      let response;
+      try {
+        console.log('Attempting CORS request...');
+        response = await fetch('https://n8n.colegiozampieri.com/webhook/EsperaMatricula', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          mode: 'cors',
+          body: JSON.stringify(formData),
+        });
+        
+        console.log('CORS response status:', response.status);
+        
+        if (response.ok) {
+          console.log('Form submitted successfully via CORS:', formData);
+          
+          toast({
+            title: "Cadastro enviado!",
+            description: "Seu cadastro foi enviado com sucesso. Você receberá informações sobre vagas e valores promocionais em primeira mão.",
+            variant: "default"
+          });
 
-      const response = await fetch('https://n8n.colegiozampieri.com/webhook/EsperaMatricula', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        mode: 'no-cors', // Try no-cors mode
-        signal: controller.signal,
-        body: JSON.stringify(formData),
+          // Reset form
+          setFormData({
+            responsibleName: '',
+            phone: '+55 ',
+            cpf: '',
+            studentName: '',
+            grade: '',
+            currentlyStudies: '',
+            previouslyStudied: '',
+            currentSchool: ''
+          });
+          
+          return;
+        }
+      } catch (corsError) {
+        console.log('CORS failed, trying alternative methods:', corsError);
+      }
+
+      // Second attempt: try sending as form data
+      console.log('Attempting form data request...');
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
       });
 
-      clearTimeout(timeoutId);
-      console.log('Response received');
+      try {
+        response = await fetch('https://n8n.colegiozampieri.com/webhook/EsperaMatricula', {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formDataToSend,
+        });
+        
+        console.log('Form data request sent');
+        
+        toast({
+          title: "Cadastro enviado!",
+          description: "Seu cadastro foi enviado com sucesso. Você receberá informações sobre vagas e valores promocionais em primeira mão.",
+          variant: "default"
+        });
 
-      // With no-cors mode, we can't read the response
-      // So we assume success if no error was thrown
-      console.log('Form submitted successfully (no-cors mode):', formData);
+        // Reset form
+        setFormData({
+          responsibleName: '',
+          phone: '+55 ',
+          cpf: '',
+          studentName: '',
+          grade: '',
+          currentlyStudies: '',
+          previouslyStudied: '',
+          currentSchool: ''
+        });
+        
+        return;
+      } catch (formDataError) {
+        console.log('Form data failed, trying URL encoded:', formDataError);
+      }
+
+      // Third attempt: try URL encoded data
+      console.log('Attempting URL encoded request...');
+      const urlEncodedData = new URLSearchParams();
+      Object.entries(formData).forEach(([key, value]) => {
+        urlEncodedData.append(key, value);
+      });
+
+      response = await fetch('https://n8n.colegiozampieri.com/webhook/EsperaMatricula', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        mode: 'no-cors',
+        body: urlEncodedData,
+      });
+
+      console.log('URL encoded request sent');
       
       toast({
         title: "Cadastro enviado!",
@@ -139,42 +215,13 @@ const RegistrationForm = () => {
       });
 
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('All methods failed. Error submitting form:', error);
       
-      // Handle different types of errors
-      if (error.name === 'AbortError') {
-        toast({
-          title: "Timeout",
-          description: "A requisição demorou muito para responder. Tente novamente.",
-          variant: "destructive"
-        });
-      } else if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        // Try alternative approach - show success message anyway since no-cors doesn't give us proper feedback
-        console.log('Failed to fetch - assuming success due to CORS limitations');
-        toast({
-          title: "Cadastro enviado!",
-          description: "Seu cadastro foi processado. Se houver algum problema, entre em contato conosco.",
-          variant: "default"
-        });
-        
-        // Reset form assuming success
-        setFormData({
-          responsibleName: '',
-          phone: '+55 ',
-          cpf: '',
-          studentName: '',
-          grade: '',
-          currentlyStudies: '',
-          previouslyStudied: '',
-          currentSchool: ''
-        });
-      } else {
-        toast({
-          title: "Erro ao enviar",
-          description: "Ocorreu um erro ao enviar o formulário. Tente novamente em alguns minutos.",
-          variant: "destructive"
-        });
-      }
+      toast({
+        title: "Erro ao enviar",
+        description: "Ocorreu um erro ao enviar o formulário. Tente novamente em alguns minutos ou entre em contato conosco.",
+        variant: "destructive"
+      });
     } finally {
       setIsSubmitting(false);
     }
