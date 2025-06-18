@@ -1,11 +1,8 @@
-
 import ZampieriLogo from "@/components/ZampieriLogo";
 import RegistrationForm from "@/components/RegistrationForm";
 import { GraduationCap, Star, Users } from "lucide-react";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-green-100">
+  return <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-green-100">
       {/* Header */}
       <header className="bg-white shadow-xl border-b-4 border-green-600">
         <div className="container mx-auto px-4 py-8">
@@ -117,12 +114,10 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-green-700 pt-8">
-            <p className="text-green-200">&copy; 2024 Colégio Zampieri. Todos os direitos reservados.</p>
+            <p className="text-green-200">© 2025 Colégio Zampieri. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
